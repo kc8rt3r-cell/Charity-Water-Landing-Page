@@ -124,31 +124,9 @@ body {
 
 /* HERO SECTION */
 .hero {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 48px;
-    align-items: center;
-}
-
-.hero-media {
-    background-color: #ffffff;
-    padding: 24px;
-    border-radius: 24px;
-    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.12);
-}
-
-.hero-image {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 18px;
-    object-fit: cover;
-    transition: opacity 0.45s ease;
-    opacity: 1;
-}
-
-.hero-image.is-fading {
-    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
 }
 
 .hero-content {
@@ -264,10 +242,6 @@ body {
 
 /* RESPONSIVE DESIGN - Makes it look good on phones */
 @media (max-width: 900px) {
-    .hero {
-        grid-template-columns: 1fr;
-    }
-
     .jerry-feature {
         grid-template-columns: 1fr;
     }

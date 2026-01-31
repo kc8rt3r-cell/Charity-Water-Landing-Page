@@ -44,15 +44,6 @@
         </section>
 
         <section id="hero" class="hero">
-            <div class="hero-media">
-                <img
-                    id="heroImage"
-                    class="hero-image"
-                    src="img/jerry_can_black.png"
-                    alt="Jerry can illustration"
-                >
-            </div>
-
             <div class="hero-content">
                 <p class="eyebrow">Modern Giving • Real Impact</p>
                 <h1>Bring clean, safe water to communities worldwide.</h1>
@@ -62,15 +53,15 @@
                 </p>
 
                 <div id="options" class="option-grid">
-                    <button class="option-card is-active" type="button" data-image="img/jerry_can_black.png">
+                    <button class="option-card is-active" type="button">
                         <span class="option-title">Well Restoration</span>
                         <span class="option-text">Repair and protect existing water points.</span>
                     </button>
-                    <button class="option-card" type="button" data-image="img/jerry_can_white.png">
+                    <button class="option-card" type="button">
                         <span class="option-title">New Boreholes</span>
                         <span class="option-text">Build reliable water sources that last.</span>
                     </button>
-                    <button class="option-card" type="button" data-image="img/jerry_can_yellow.png">
+                    <button class="option-card" type="button">
                         <span class="option-title">Community Training</span>
                         <span class="option-text">Equip local leaders to manage systems.</span>
                     </button>
@@ -91,7 +82,6 @@
     </footer>
 
     <script>
-        const heroImage = document.getElementById('heroImage');
         const optionCards = document.querySelectorAll('.option-card');
         const jerryImage = document.getElementById('jerryCanImage');
         const jerryActions = document.querySelector('.jerry-actions');
@@ -99,24 +89,8 @@
 
         optionCards.forEach((card) => {
             card.addEventListener('click', () => {
-                const nextImage = card.getAttribute('data-image');
-
-                if (!nextImage || heroImage.getAttribute('src') === nextImage) {
-                    return;
-                }
-
                 optionCards.forEach((button) => button.classList.remove('is-active'));
                 card.classList.add('is-active');
-
-                heroImage.classList.add('is-fading');
-
-                window.setTimeout(() => {
-                    heroImage.setAttribute('src', nextImage);
-
-                    heroImage.onload = () => {
-                        heroImage.classList.remove('is-fading');
-                    };
-                }, 200);
             });
         });
 

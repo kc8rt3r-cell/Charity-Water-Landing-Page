@@ -273,6 +273,14 @@ body {
     font-family: 'Inter', sans-serif;
 }
 
+.extra-box:hover {
+    background-color: #ffffff;
+}
+
+.extra-box:hover .extra-box-text {
+    color: #1f2a37;
+}
+
 .hero-actions {
     display: flex;
     gap: 16px;

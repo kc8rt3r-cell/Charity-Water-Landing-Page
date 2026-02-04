@@ -104,8 +104,12 @@
         let currentMainIndex = 0;
         let currentVolunteerIndex = 0;
         let isHovering = false;
+        let slideshowTimer;
+        let isTransitioning = false;
 
         const swapImage = (src, altText) => {
+            if (isTransitioning) return;
+            isTransitioning = true;
             leftBoxImageNext.src = src;
             leftBoxImageNext.alt = altText;
             leftBoxImageNext.classList.add('wipe-in');
@@ -113,6 +117,7 @@
                 leftBoxImage.src = src;
                 leftBoxImage.alt = altText;
                 leftBoxImageNext.classList.remove('wipe-in');
+                isTransitioning = false;
             }, { once: true });
         };
 
@@ -122,13 +127,21 @@
             currentMainIndex = (currentMainIndex + 1) % mainImages.length;
         };
 
+        const scheduleNextSlide = () => {
+            clearTimeout(slideshowTimer);
+            slideshowTimer = setTimeout(() => {
+                showNextMainImage();
+                scheduleNextSlide();
+            }, 1000);
+        };
+
         const getNextVolunteerImage = () => {
             const image = volunteerImages[currentVolunteerIndex];
             currentVolunteerIndex = (currentVolunteerIndex + 1) % volunteerImages.length;
             return image;
         };
 
-        setInterval(showNextMainImage, 1000);
+        scheduleNextSlide();
 
         donateBox.addEventListener('mouseenter', () => {
             isHovering = true;
@@ -138,6 +151,7 @@
         donateBox.addEventListener('mouseleave', () => {
             isHovering = false;
             swapImage(mainImages[currentMainIndex], 'Main Image');
+            scheduleNextSlide();
         });
 
         volunteerBox.addEventListener('mouseenter', () => {
@@ -148,6 +162,7 @@
         volunteerBox.addEventListener('mouseleave', () => {
             isHovering = false;
             swapImage(mainImages[currentMainIndex], 'Main Image');
+            scheduleNextSlide();
         });
     </script>
 </body>

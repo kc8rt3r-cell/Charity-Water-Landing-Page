@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap');
+
 /* ============================================
    WEBSITE STYLES - How things look and feel
    ============================================ */
@@ -11,7 +13,8 @@
 
 /* BODY - Main page background and text */
 body {
-    font-family: 'Arial', sans-serif; /* Change this to use different fonts */
+    font-family: 'Inter', sans-serif; /* Inter Medium */
+    font-weight: 500;
     line-height: 1.6;    /* Space between text lines (improves readability) */
     color: #333;         /* Dark gray text color */
     background-color: #FEFAF1; /* Warm off-white background (R:254 G:250 B:241) */
@@ -21,133 +24,236 @@ body {
 .header {
     background-color: #FFF7E1; /* Warm header background (R:255 G:247 B:225) */
     color: #2c3e50;            /* Dark text for contrast on light header */
-    padding: 0px 20px;         /* Space inside the header */
+    padding: 0px 20px;         /* No vertical padding */
     display: flex;             /* Use flexbox for layout */
     align-items: center;       /* Center vertically */
-    gap: 20px;                 /* Space between logo and nav */
+    justify-content: space-between; /* Space between logo and nav */
     overflow: hidden;          /* Keep header content contained */
-    height: 100px;             /* Restored header height to fit logo */
+    min-height: 1px;          /* Minimal header height */
+    max-height: 65px;         /* Slightly larger maximum height */
     position: sticky;          /* Keep header visible at top */
     top: 0;
     z-index: 100;
 }
 
 .header img {
-    height: 250px;             /* Restore logo height to previous size */
+    height: 180px;             /* Much larger logo height */
     width: auto;               /* Keep aspect ratio */
-    flex-shrink: 0;            /* Prevent image from shrinking */
-}
-
-.tagline {
-    font-size: 18px;
-    font-style: italic;  /* Slanted text */
-    opacity: 0.9;        /* Slightly transparent */
-    margin: 0;           /* Remove default margins */
+    flex-shrink: 1;            /* Allow image to shrink */
 }
 
 /* NAVIGATION - Menu links */
 .navigation {
-    position: absolute;         /* Center inside header */
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%); /* Center horizontally and vertically relative to header */
+    position: absolute;         /* Position absolutely to center */
+    left: 50%;                  /* Move to center */
+    transform: translateX(-50%); /* Center horizontally */
     display: flex;              /* Horizontal links */
-    gap: 16px;                  /* Space between links */
+    gap: 30px;                  /* Space between links */
     align-items: center;
-    background: transparent;    /* Inherit header background */
     padding: 0;
 }
 
 .nav-link {
-    color: inherit;             /* Use header text color */
+    color: #2c3e50;             /* Dark text color */
     text-decoration: none;      /* Remove underline */
-    margin: 0 10px;             /* Space between links */
     font-size: 16px;
-    transition: 0.15s;          /* Smooth color change on hover */
+    font-weight: 500;           /* Slightly bold */
+    transition: all 0.3s ease;  /* Smooth transition on hover */
+    padding: 8px 12px;          /* Add padding for better click area */
+    border-radius: 4px;         /* Rounded corners */
 }
 
 .nav-link:hover {
-    color: #3498db;  /* Light blue when you hover over it */
+    color: #fdc300;             /* Charity water yellow on hover */
+    background-color: rgba(253, 195, 0, 0.1); /* Light yellow background */
 }
 
-/* CONTAINER - Main content area */
-.container {
-    max-width: 900px;  /* Don't make it wider than this */
-    margin: 0 auto;    /* Center on the page */
-    padding: 20px;
-}
-
-/* SECTIONS - Individual content areas */
-.section {
-    background-color: white;
-    padding: 40px;     /* Space inside the section */
-    margin-bottom: 30px;
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
-}
-
-.section h2 {
-    color: #2c3e50;        /* Dark blue heading color */
-    margin-bottom: 20px;
-    font-size: 32px;
-}
-
-.section p {
-    margin-bottom: 15px;   /* Space between paragraphs */
-    font-size: 16px;
-}
-
-/* LISTS - Bullet points */
-.section ul {
-    margin-left: 20px;     /* Indent the list */
-    margin-bottom: 15px;
-}
-
-.section li {
-    margin-bottom: 8px;    /* Space between items */
-}
-
-/* CARDS - Small content boxes */
-.card {
-    background-color: #ecf0f1; /* Light gray background */
-    padding: 20px;
-    margin-bottom: 15px;
-    border-left: 4px solid #3498db; /* Colored left border */
+/* LEFT SIDE BOX */
+.left-box {
+    position: absolute;
+    left: 50px;         /* Moved to the right */
+    top: 50%;           /* Center vertically */
+    transform: translateY(-50%); /* Center adjustment */
+    width: 480px;
+    height: 480px;      /* Larger square */
+    background-color: black;
+    padding: 16px 16px 40px; /* Polaroid-style frame (thicker bottom) */
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
     border-radius: 4px;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;   /* Crop image to box */
 }
 
-.card h3 {
-    color: #2c3e50;
-    margin-bottom: 10px;
+.left-box-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;       /* Fill the box width */
+    height: 100%;      /* Fill the box height */
+    object-fit: contain; /* Show full image without cropping */
+    display: block;
+    border-radius: 2px;
 }
 
-.card p {
-    font-size: 15px;
+.left-box-image.is-visible {
+    z-index: 1;
+}
+
+.left-box-image.wipe-in {
+    z-index: 2;
+    animation: wipeIn 1.2s ease-in-out forwards;
+    clip-path: inset(0 100% 0 0);
+}
+
+@keyframes wipeIn {
+    from {
+        clip-path: inset(0 100% 0 0);
+    }
+    to {
+        clip-path: inset(0 0 0 0);
+    }
+}
+
+/* BLACK RECTANGLE ABOVE BUTTONS */
+.top-strip {
+    position: absolute;
+    left: 0;
+    top: calc(50% - 200px); /* Align with top of the text box */
+    width: 100vw;
+    height: 380px;
+    background-color: #ffc907; /* Charity water yellow */
+    z-index: 10;
+}
+
+.top-rectangle {
+    position: absolute;
+    left: calc((100% + 650px) / 2); /* Center between image right edge and screen right edge */
+    top: calc(50% - 160px); /* Move lower */
+    transform: translateX(-50%);
+    width: 700px;
+    height: 80px;
+    background-color: black;
+    z-index: 60;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1.2;
+    padding: 0 20px;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+/* CENTER BOX */
+.action-row {
+    position: absolute;
+    left: calc((100% + 650px) / 2); /* Align with top text box */
+    top: calc(50% + 20px);
+    transform: translateX(-50%);
+    width: 540px; /* Slightly narrower row */
+    display: flex;
+    gap: 16px;
+    justify-content: space-between;
+    z-index: 50;
+}
+
+.center-box {
+    position: relative;
+    width: 160px;
+    height: 76px;
+    padding: 10px 12px;
+    background-color: black;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.center-box-image {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    display: block;
+}
+
+.center-box-text {
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+}
+
+/* RIGHT BOX */
+.right-box {
+    position: relative;
+    width: 160px;
+    height: 76px;
+    padding: 10px 12px;
+    background-color: black;
+    color: white;       /* White text on black background */
+    font-size: 20px;    /* Slightly smaller text */
+    font-weight: 500;   /* Same as nav-link */
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* EXTRA BOX */
+.extra-box {
+    position: relative;
+    width: 160px;
+    height: 76px;
+    padding: 10px 12px;
+    background-color: black;
 }
 
 /* FOOTER - Bottom section of the page */
 .footer {
-    background-color: #2c3e50; /* Same color as header */
-    color: white;
+    background-color: #FFF7E1; /* Warm background matching header */
+    color: #2c3e50;           /* Dark text for contrast */
     text-align: center;
     padding: 30px 20px;
-    margin-top: 40px;
+    margin-top: 800px;
+    border-top: 3px solid #fdc300; /* Charity water yellow accent */
 }
 
 .footer p {
     margin: 5px 0;
 }
 
+.social-icons {
+    margin-top: 12px;
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    align-items: center;
+}
+
+.social-icons a {
+    width: 22px;
+    height: 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #7a7a7a;
+    text-decoration: none;
+}
+
+.social-icons svg {
+    width: 22px;
+    height: 22px;
+    fill: currentColor;
+}
+
 /* RESPONSIVE DESIGN - Makes it look good on phones */
 @media (max-width: 768px) {
-    .header h1 {
-        font-size: 32px;
-    }
-
-    .section {
-        padding: 20px;
-    }
-
     .nav-link {
         margin: 0 10px;
         font-size: 14px;

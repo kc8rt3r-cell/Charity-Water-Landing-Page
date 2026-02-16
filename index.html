@@ -33,15 +33,6 @@
     <!-- BLACK RECTANGLE ABOVE BUTTONS -->
     <div class="top-rectangle band-box">Changing the <img src="img/images/globe.svg" alt="World" class="word-icon"> One Sip at a Time!</div>
 
-    <!-- RECTANGLE BELOW MAIN BLACK BOX -->
-    <div class="sub-rectangle" id="story-section">
-        <div class="story-image-placeholder" aria-hidden="true"></div>
-        <img src="img/images/left arrow.svg" alt="Story highlight" class="story-image story-image-left">
-        <div class="story-text-spacer" aria-hidden="true"></div>
-        <div class="story-text band-box story-box">Every smile has a story</div>
-        <img src="img/images/right arrow.svg" alt="Story highlight" class="story-image story-image-right">
-    </div>
-
     <!-- ACTION BOXES -->
     <div class="action-row">
         <div class="center-box">
@@ -56,13 +47,13 @@
             <img src="img/images/1F9D1-200D-1F91D-200D-1F9D1.svg" alt="Volunteer" class="right-box-icon">
         </div>
 
-        <a class="action-link" href="#story-section">
+        <div class="action-link">
             <div class="extra-box">
                 <img src="img/images/open book.svg" alt="Open Book" class="extra-box-image">
-                <span class="extra-box-text">There Story!</span>
+                <span class="extra-box-text">Their Story!</span>
                 <img src="img/images/open book.svg" alt="Open Book" class="extra-box-image">
             </div>
-        </a>
+        </div>
     </div>
 
     <!-- FOOTER SECTION - Appears at the bottom of every page -->
@@ -92,11 +83,13 @@
     </footer>
 
     <script>
+        const leftBox = document.querySelector('.left-box');
         const leftBoxImage = document.getElementById('leftBoxImage');
         const leftBoxImageNext = document.getElementById('leftBoxImageNext');
         const donateBox = document.querySelector('.center-box');
         const volunteerBox = document.querySelector('.right-box');
         const actionRow = document.querySelector('.action-row');
+        const hasCarousel = Boolean(leftBox && leftBoxImage && leftBoxImageNext);
 
         const mainImages = [
             'img/images/Main image/20170302-IMG_6802-3.jpg',
@@ -152,13 +145,16 @@
             });
         };
 
-        const startWipeTransition = () => {
-            leftBoxImageNext.classList.remove('wipe-in');
+        const startSwipeRightTransition = () => {
+            leftBoxImageNext.classList.remove('slide-in-right');
+            leftBoxImage.classList.remove('slide-out-right');
             void leftBoxImageNext.offsetWidth;
-            leftBoxImageNext.classList.add('wipe-in');
+            leftBoxImageNext.classList.add('slide-in-right');
+            leftBoxImage.classList.add('slide-out-right');
         };
 
         const swapImage = (src, altText) => {
+            if (!hasCarousel) return;
             if (leftBoxImage.src.endsWith(src)) return;
             if (isTransitioning) {
                 pendingSwap = { src, altText };
@@ -169,7 +165,7 @@
             leftBoxImageNext.alt = altText;
             const startSwap = () => {
                 applyHorizontalSizing(leftBoxImageNext);
-                startWipeTransition();
+                startSwipeRightTransition();
             };
             leftBoxImageNext.addEventListener('load', startSwap, { once: true });
             if (leftBoxImageNext.complete) {
@@ -179,7 +175,8 @@
                 leftBoxImage.src = src;
                 leftBoxImage.alt = altText;
                 applyHorizontalSizing(leftBoxImage);
-                leftBoxImageNext.classList.remove('wipe-in');
+                leftBoxImageNext.classList.remove('slide-in-right');
+                leftBoxImage.classList.remove('slide-out-right');
                 isTransitioning = false;
                 if (pendingSwap) {
                     const nextSwap = pendingSwap;
@@ -261,9 +258,11 @@
         preloadImages(mainImages);
         preloadImages(volunteerImages);
         preloadImages(donateImages);
-        applyHorizontalSizing(leftBoxImage);
-        applyHorizontalSizing(leftBoxImageNext);
-        scheduleNextSlide();
+        if (hasCarousel) {
+            applyHorizontalSizing(leftBoxImage);
+            applyHorizontalSizing(leftBoxImageNext);
+            scheduleNextSlide();
+        }
 
         const isMovingToActionBox = (event) => {
             const nextTarget = event.relatedTarget;

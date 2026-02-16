@@ -14,10 +14,10 @@
 
         <!-- NAVIGATION MENU - placed inside header -->
         <nav class="navigation">
-            <a href="#home" class="nav-link">Home</a>
-            <a href="#about" class="nav-link">About</a>
-            <a href="#services" class="nav-link">Services</a>
-            <a href="#contact" class="nav-link">Contact</a>
+            <span class="nav-link">Home</span>
+            <span class="nav-link">About</span>
+            <span class="nav-link">Services</span>
+            <span class="nav-link">Contact</span>
         </nav>
     </header>
 
@@ -25,6 +25,9 @@
     <div class="left-box">
         <img src="img/images/Main image/20170302-IMG_6802-3.jpg" alt="Regular Image" class="left-box-image is-visible" id="leftBoxImage">
         <img src="img/images/Main image/20170302-IMG_6802-3.jpg" alt="Regular Image" class="left-box-image" id="leftBoxImageNext">
+        <img src="img/images/Logos/charitywater_logo_horizontal_WhiteText.png" alt="charity: water" class="left-box-logo">
+        <img src="img/images/Logos/jerry_can_yellow.png" alt="Jerry can" class="left-box-tall-icon">
+        <div class="left-box-caption">Water Changes Everything</div>
     </div>
 
     <!-- YELLOW STRIP ABOVE TEXT BOX -->
@@ -45,14 +48,6 @@
             <img src="img/images/1F9D1-200D-1F91D-200D-1F9D1.svg" alt="Volunteer" class="right-box-icon">
             <span>Volunteer!</span>
             <img src="img/images/1F9D1-200D-1F91D-200D-1F9D1.svg" alt="Volunteer" class="right-box-icon">
-        </div>
-
-        <div class="action-link">
-            <div class="extra-box">
-                <img src="img/images/open book.svg" alt="Open Book" class="extra-box-image">
-                <span class="extra-box-text">Their Story!</span>
-                <img src="img/images/open book.svg" alt="Open Book" class="extra-box-image">
-            </div>
         </div>
     </div>
 
@@ -138,6 +133,18 @@
             img.classList.toggle('is-horizontal', img.naturalWidth > img.naturalHeight);
         };
 
+        const updateOverlayVisibility = (img) => {
+            if (!leftBox || !img) return;
+            const isHorizontal = img.classList.contains('is-horizontal');
+            leftBox.classList.toggle('show-horizontal-overlay', isHorizontal);
+            leftBox.classList.toggle('show-vertical-overlay', !isHorizontal);
+        };
+
+        const clearOverlayVisibility = () => {
+            if (!leftBox) return;
+            leftBox.classList.remove('show-horizontal-overlay', 'show-vertical-overlay');
+        };
+
         const preloadImages = (sources) => {
             sources.forEach((src) => {
                 const img = new Image();
@@ -165,6 +172,7 @@
             leftBoxImageNext.alt = altText;
             const startSwap = () => {
                 applyHorizontalSizing(leftBoxImageNext);
+                clearOverlayVisibility();
                 startSwipeRightTransition();
             };
             leftBoxImageNext.addEventListener('load', startSwap, { once: true });
@@ -175,6 +183,7 @@
                 leftBoxImage.src = src;
                 leftBoxImage.alt = altText;
                 applyHorizontalSizing(leftBoxImage);
+                updateOverlayVisibility(leftBoxImage);
                 leftBoxImageNext.classList.remove('slide-in-right');
                 leftBoxImage.classList.remove('slide-out-right');
                 isTransitioning = false;
@@ -261,6 +270,7 @@
         if (hasCarousel) {
             applyHorizontalSizing(leftBoxImage);
             applyHorizontalSizing(leftBoxImageNext);
+            updateOverlayVisibility(leftBoxImage);
             scheduleNextSlide();
         }
 

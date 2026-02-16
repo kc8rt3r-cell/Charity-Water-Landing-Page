@@ -13,7 +13,7 @@
 
 :root {
     --yellow-strip-height: 460px;
-    --arrow-glow-shadow: 0 0 0 2px rgba(248, 250, 252, 0.18), 0 0 24px rgba(248, 250, 252, 0.45), 0 12px 22px rgba(0, 0, 0, 0.35);
+    --arrow-glow-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2), 0 0 24px rgba(0, 0, 0, 0.45), 0 12px 22px rgba(0, 0, 0, 0.35);
 }
 
 html {
@@ -76,22 +76,16 @@ body {
     text-decoration: none;      /* Remove underline */
     font-size: 16px;
     font-weight: 500;           /* Slightly bold */
-    transition: all 0.3s ease;  /* Smooth transition on hover */
+    transition: none;
     padding: 8px 12px;          /* Add padding for better click area */
     border-radius: 4px;         /* Rounded corners */
-}
-
-.nav-link:hover {
-    color: #fdc300;             /* Charity water yellow on hover */
-    background-color: rgba(253, 195, 0, 0.1); /* Light yellow background */
-    box-shadow: var(--arrow-glow-shadow);
+    cursor: default;
 }
 
 .left-box,
 .band-box,
 .center-box,
-.right-box,
-.extra-box {
+.right-box {
     box-shadow: var(--arrow-glow-shadow);
 }
 
@@ -148,6 +142,60 @@ body {
     z-index: 1;
     opacity: 1;
     animation: slideOutRight 0.9s ease-out forwards;
+}
+
+.left-box-logo {
+    position: absolute;
+    top: 18px;
+    left: 18px;
+    width: 170px;
+    height: auto;
+    z-index: 4;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.left-box-tall-icon {
+    position: absolute;
+    top: 18px;
+    left: 18px;
+    width: 62px;
+    height: 62px;
+    object-fit: contain;
+    z-index: 4;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.left-box-caption {
+    position: absolute;
+    left: 50%;
+    bottom: 18px;
+    transform: translateX(-50%);
+    color: #ffffff;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    line-height: 1.2;
+    z-index: 4;
+    text-align: center;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.left-box.show-horizontal-overlay .left-box-logo,
+.left-box.show-horizontal-overlay .left-box-caption {
+    opacity: 1;
+    visibility: visible;
+}
+
+.left-box.show-vertical-overlay .left-box-tall-icon {
+    opacity: 1;
+    visibility: visible;
 }
 
 @keyframes slideInRight {
@@ -224,21 +272,19 @@ body {
     width: 160px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 28px;
     align-items: center;
     z-index: 50;
 }
 
-.action-link {
-    text-decoration: none;
-    display: inline-flex;
-}
-
 .action-row .center-box,
-.action-row .right-box,
-.action-row .extra-box {
+.action-row .right-box {
     width: 200px;
     height: 76px;
+}
+
+.action-row .center-box {
+    margin-top: 36px;
 }
 
 .center-box {
@@ -304,41 +350,6 @@ body {
 
 .right-box:hover {
     background-color: #77A8BB;
-    color: #1f2a37;
-}
-
-/* EXTRA BOX */
-.extra-box {
-    position: relative;
-    width: 200px;
-    height: 76px;
-    padding: 10px 12px;
-    background-color: #003366;
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-.extra-box-image {
-    width: 54px;
-    height: 54px;
-    display: block;
-}
-
-.extra-box-text {
-    color: white;
-    font-size: 20px;
-    font-weight: 500;
-    font-family: 'Inter', sans-serif;
-}
-
-.extra-box:hover {
-    background-color: #77A8BB;
-}
-
-.extra-box:hover .extra-box-text {
     color: #1f2a37;
 }
 
@@ -472,6 +483,24 @@ body {
         margin: 24px auto 16px;
     }
 
+    .left-box-logo {
+        top: 12px;
+        left: 12px;
+        width: 130px;
+    }
+
+    .left-box-tall-icon {
+        top: 12px;
+        left: 12px;
+        width: 50px;
+        height: 50px;
+    }
+
+    .left-box-caption {
+        bottom: 12px;
+        font-size: 20px;
+    }
+
     .top-strip {
         display: none;
     }
@@ -495,26 +524,27 @@ body {
         transform: none;
         width: min(92vw, 320px);
         margin: 0 auto 20px;
-        gap: 12px;
+        gap: 18px;
     }
 
     .action-row .center-box,
-    .action-row .right-box,
-    .action-row .extra-box {
+    .action-row .right-box {
         width: 100%;
         height: 70px;
     }
 
+    .action-row .center-box {
+        margin-top: 20px;
+    }
+
     .center-box-image,
-    .right-box-icon,
-    .extra-box-image {
+    .right-box-icon {
         width: 40px;
         height: 40px;
     }
 
     .center-box-text,
-    .right-box,
-    .extra-box-text {
+    .right-box {
         font-size: 18px;
     }
 
